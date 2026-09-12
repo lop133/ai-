@@ -1,0 +1,14 @@
+{
+  "name": "pelican-bicycle",
+  "private": true,
+  "version": "1.0.0",
+  "description": "鹈鹕骑自行车 — pure SVG + SMIL animation, plus its verification harness",
+  "scripts": {
+    "build": "python3 build.py",
+    "verify": "python3 verify.py",
+    "serve": "python3 -m http.server 8000 --bind 0.0.0.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

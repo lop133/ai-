@@ -1,0 +1,8 @@
+# verification / tooling scratch (not part of the deliverable)
+.verify/
+node_modules/
+frames/
+*.png
+# …except the committed README preview
+!preview.png
+__pycache__/
