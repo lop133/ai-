@@ -10,11 +10,15 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - name: Call MCP endpoint
         run: python3 tools/mcp_proxy.py
+        env:
+          MCP_WAIT_SECONDS: "${{ vars.MCP_WAIT_SECONDS || 300 }}"
       - name: Publish result back to branch
+        if: always()
         run: |
           git config user.name "mcp-probe[bot]"
           git config user.email "mcp-probe@users.noreply.github.com"
