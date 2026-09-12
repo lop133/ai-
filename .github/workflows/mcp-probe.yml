@@ -16,7 +16,7 @@ jobs:
       - name: Call MCP endpoint
         run: python3 tools/mcp_proxy.py
         env:
-          MCP_WAIT_SECONDS: "${{ vars.MCP_WAIT_SECONDS || 300 }}"
+          MCP_WAIT_SECONDS: "1200"
       - name: Publish result back to branch
         if: always()
         run: |
