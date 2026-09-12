@@ -5,6 +5,8 @@ on:
     paths:
       - '.mcp/**'
   workflow_dispatch: {}
+permissions:
+  contents: write
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -12,3 +14,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Call MCP endpoint
         run: python3 tools/mcp_proxy.py
+      - name: Publish result back to branch
+        run: |
+          git config user.name "mcp-probe[bot]"
+          git config user.email "mcp-probe@users.noreply.github.com"
+          git add -A .mcp-out
+          git commit -m "mcp-probe result $(date -u +%FT%TZ) [skip ci]" || echo "nothing to commit"
+          git pull --rebase origin arena/01a094b2-ai
+          git push origin HEAD:arena/01a094b2-ai
