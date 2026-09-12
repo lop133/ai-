@@ -1,0 +1,14 @@
+name: mcp-probe
+on:
+  push:
+    branches: [arena/01a094b2-ai]
+    paths:
+      - '.mcp/**'
+  workflow_dispatch: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Call MCP endpoint
+        run: python3 tools/mcp_proxy.py

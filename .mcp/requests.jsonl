@@ -1,0 +1,3 @@
+{"id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"arena-agent","version":"1.0"}}}
+{"id":2,"method":"notifications/initialized","params":{}}
+{"id":3,"method":"tools/list","params":{}}
