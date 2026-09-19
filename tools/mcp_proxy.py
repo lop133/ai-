@@ -18,19 +18,27 @@ Behaviour:
     caller can see the run reached this script even on total failure
 
 Env:
-  MCP_WAIT_SECONDS  total retry window while the endpoint is unreachable (default 600)
+  MCP_WAIT_SECONDS  total retry window while the endpoint is unreachable (default 600,
+                    or the value in .mcp/wait_minutes if present, whichever is larger)
   MCP_ENDPOINT      override .mcp/endpoint (for local testing)
 """
 
-import json
 import os
 import time
+
+WAIT_SECONDS = int(os.environ.get("MCP_WAIT_SECONDS", "600"))
+if os.path.exists(".mcp/wait_minutes"):
+    try:
+        WAIT_SECONDS = max(WAIT_SECONDS, int(open(".mcp/wait_minutes").read().strip()) * 60)
+    except ValueError:
+        pass
+
+import json
 import urllib.error
 import urllib.request
 
 ENDPOINT = os.environ.get("MCP_ENDPOINT") or open(".mcp/endpoint").read().strip()
 REQS = [json.loads(line) for line in open(".mcp/requests.jsonl") if line.strip()]
-WAIT_SECONDS = int(os.environ.get("MCP_WAIT_SECONDS", "600"))
 OUT_DIR = ".mcp-out"
 
 RETRYABLE_HTTP = {403, 408, 425, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 525, 526, 527, 530}

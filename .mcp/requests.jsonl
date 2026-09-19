@@ -1,4 +1,1 @@
-{"id": 1, "method": "tools/list", "params": {}}
-{"id": 2, "method": "resources/list", "params": {}}
-{"id": 3, "method": "prompts/list", "params": {}}
-{"id": 4, "method": "ping", "params": {}}
+{"id":1,"method":"tools/list","params":{}}

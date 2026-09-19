@@ -24,7 +24,7 @@ concurrency:
 jobs:
   relay:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 95
     steps:
       - uses: actions/checkout@v4
       - name: Run MCP relay batch
