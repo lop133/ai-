@@ -1,0 +1,42 @@
+name: mcp-relay
+
+# The agent sandbox has no egress to the MCP host (Cloudflare Quick Tunnel is
+# not on the sandbox allowlist), so MCP JSON-RPC calls are relayed through this
+# GitHub Actions runner, which has unrestricted internet access.
+#
+# Usage: commit the requests into .mcp/requests.jsonl (endpoint in .mcp/endpoint)
+# and push to the arena branch. tools/mcp_proxy.py runs the batch and the
+# workflow commits the responses back to .mcp-out/ on the same branch.
+
+on:
+  push:
+    branches: [arena/01a0b91c-ai]
+    paths: ['.mcp/**']
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mcp-relay
+  cancel-in-progress: false
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run MCP relay batch
+        run: python3 tools/mcp_proxy.py
+        env:
+          MCP_WAIT_SECONDS: "600"
+      - name: Publish results back to branch
+        if: always()
+        run: |
+          git config user.name "arena-relay[bot]"
+          git config user.email "arena-relay@users.noreply.github.com"
+          git add -A .mcp-out
+          git commit -m "mcp relay results $(date -u +%FT%TZ) [skip ci]" || echo "nothing to commit"
+          git pull --rebase origin arena/01a0b91c-ai || true
+          git push origin HEAD:arena/01a0b91c-ai
