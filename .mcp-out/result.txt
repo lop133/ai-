@@ -1,4 +1,4 @@
-=== relay attempt at 2026-09-19T10:27:39Z -> https://ebony-theatre-seminars-recruiting.trycloudflare.com/mcp/ea1bbc23864514cb7f06cd83994f742e
+=== relay attempt at 2026-09-19T10:38:57Z -> https://ebony-theatre-seminars-recruiting.trycloudflare.com/mcp/ea1bbc23864514cb7f06cd83994f742e
 --- initialize variant 'spec' exception: URLError(gaierror(-2, 'Name or service not known'))
 --- initialize variant 'hdr' exception: URLError(gaierror(-2, 'Name or service not known'))
 --- initialize variant 'old' exception: URLError(gaierror(-2, 'Name or service not known'))
